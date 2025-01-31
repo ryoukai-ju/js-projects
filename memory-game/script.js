@@ -52,9 +52,10 @@ const cardArray = [
 cardArray.sort(()=> 0.5 - Math.random());
 
 const gridDisplay = document.querySelector('#grid');
+const resultDisplay = document.querySelector('#result')
 
 let cardChosen = []
-const cardChosenId = []
+let cardChosenId = []
 const cardWon = []
 
 function createBoard () {
@@ -72,18 +73,38 @@ createBoard();
 
 function checkMatch () {
     const cards = document.querySelectorAll('img')
+    const optionOneId = cardChosen[0]
+    const optionTwoId = cardChosen[1]
 
     // console.log('check for match')
     if (cardChosen[0] == cardChosen[1]){
+
+        if (optionOneId == optionTwoId) {
+            cards[optionOneId].setAttribute('src', 'images/blank.png')
+            cards[optionTwoId].setAttribute('src', 'images/blank.png')
+            alert('You have clicked the same image!')
+        }
+
         alert('You find a match!')
-        cards[cardChosenId[0]].setAttribute('src', 'images/white.png')
-        cards[cardChosenId[1]].setAttribute('src', 'images/white.png')
-        cards[cardChosenId[0]].removeEventListener('click', flipCard)
-        cards[cardChosenId[1]].removeEventListener('click', flipCard)
+        cards[optionOneId].setAttribute('src', 'images/white.png')
+        cards[optionTwoId].setAttribute('src', 'images/white.png')
+        cards[optionOneId].removeEventListener('click', flipCard)
+        cards[optionTwoId].removeEventListener('click', flipCard)
+        
         cardWon.push(cardChosen)
+    } else {
+        cards[optionOneId].setAttribute('src', 'images/blank.png')
+        cards[optionTwoId].setAttribute('src', 'images/blank.png')
+        alert('Sorry try again!')
     }
 
+    resultDisplay.textContent = cardWon.length
     cardChosen = []
+    cardChosenId = []
+
+    if (cardWon.length == cardArray.length / 2) {
+        resultDisplay.innerHTML = 'Congratulations you found them all!'
+    }
 }
 
 
