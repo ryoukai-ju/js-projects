@@ -45,5 +45,4 @@ function countDown() {
     alert(`GAMEOVER! Your score is: ${result}`)
   }
 }
-
 let countDownTimerId = setInterval(countDown, 1000)
